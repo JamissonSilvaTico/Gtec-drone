@@ -1,0 +1,15 @@
+# Dependências
+/node_modules
+/server/node_modules
+
+# Arquivos de ambiente (MUITO IMPORTANTE)
+.env
+/server/.env
+
+# Pasta de build do Vite
+/dist
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
