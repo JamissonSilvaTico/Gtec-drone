@@ -12,6 +12,22 @@ import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
+// Fallback for missing .env file in development
+if (process.env.NODE_ENV !== "production") {
+  if (!process.env.MONGO_URI) {
+    console.warn(
+      "WARNING: MONGO_URI not found in .env file. Using default local MongoDB connection."
+    );
+    process.env.MONGO_URI = "mongodb://127.0.0.1:27017/gtec-drone";
+  }
+  if (!process.env.JWT_SECRET) {
+    console.warn(
+      "WARNING: JWT_SECRET not found in .env file. Using a default secret. THIS IS INSECURE FOR PRODUCTION."
+    );
+    process.env.JWT_SECRET = "temporary-secret-for-development";
+  }
+}
+
 connectDB().then(() => {
   seedDatabase();
 });
@@ -43,7 +59,7 @@ if (process.env.NODE_ENV === "production") {
 }
 // --- END DEPLOYMENT CONFIGURATION ---
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () =>
   console.log(
